@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Users, Baby, Heart, Leaf } from "lucide-react";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Login = () => {
   const [userType, setUserType] = useState<"child" | "elder" | null>(null);
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +27,9 @@ const Login = () => {
     return (
       <div className="min-h-screen bg-gradient-earth flex items-center justify-center p-4">
         <div className="max-w-4xl w-full">
+          <div className="absolute top-4 right-4">
+            <LanguageSwitcher />
+          </div>
           <div className="text-center mb-8 animate-fade-in">
             <div className="flex justify-center mb-4">
               <div className="bg-primary rounded-full p-4 shadow-glow">
@@ -31,10 +37,10 @@ const Login = () => {
               </div>
             </div>
             <h1 className="text-4xl font-bold text-foreground mb-2">
-              🌱 SoilBuddy
+              🌱 {t('app.title')}
             </h1>
             <p className="text-xl text-muted-foreground">
-              Growing healthy gardens together
+              {t('app.subtitle')}
             </p>
           </div>
 
@@ -49,7 +55,7 @@ const Login = () => {
                   <Baby className="h-12 w-12 text-white" />
                 </div>
                 <CardTitle className="text-2xl font-bold text-child-primary">
-                  🎈 Kids Garden Explorer
+                  {t('login.children.title')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center space-y-4">
@@ -59,21 +65,20 @@ const Login = () => {
                   <span className="animate-wiggle">🌱</span>
                 </div>
                 <p className="text-lg text-muted-foreground">
-                  Meet Dewey the Drop and Soily the Worm! 
-                  Go on fun missions to help your garden grow strong and healthy!
+                  {t('login.children.description')}
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-center space-x-2">
                     <span>🏆</span>
-                    <span>Earn garden badges</span>
+                    <span>{t('login.children.badges')}</span>
                   </div>
                   <div className="flex items-center justify-center space-x-2">
                     <span>🎮</span>
-                    <span>Play soil health games</span>
+                    <span>{t('login.children.games')}</span>
                   </div>
                   <div className="flex items-center justify-center space-x-2">
                     <span>🌈</span>
-                    <span>Colorful soil reports</span>
+                    <span>{t('login.children.reports')}</span>
                   </div>
                 </div>
               </CardContent>
@@ -89,7 +94,7 @@ const Login = () => {
                   <Heart className="h-12 w-12 text-primary-foreground" />
                 </div>
                 <CardTitle className="text-2xl font-bold text-elder-primary">
-                  🌿 Garden Wisdom Hub
+                  {t('login.elder.title')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center space-y-4">
@@ -99,21 +104,20 @@ const Login = () => {
                   <span>🔊</span>
                 </div>
                 <p className="text-lg text-muted-foreground">
-                  Simple, clear garden insights with voice guidance.
-                  Perfect for experienced gardeners who want easy-to-read soil health reports.
+                  {t('login.elder.description')}
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-center space-x-2">
                     <span>📈</span>
-                    <span>Large, clear charts</span>
+                    <span>{t('login.elder.charts')}</span>
                   </div>
                   <div className="flex items-center justify-center space-x-2">
                     <span>🔊</span>
-                    <span>Audio notifications</span>
+                    <span>{t('login.elder.audio')}</span>
                   </div>
                   <div className="flex items-center justify-center space-x-2">
                     <span>📋</span>
-                    <span>Weekly garden reports</span>
+                    <span>{t('login.elder.reports')}</span>
                   </div>
                 </div>
               </CardContent>
@@ -122,7 +126,7 @@ const Login = () => {
 
           <div className="text-center mt-8 text-muted-foreground">
             <Users className="h-6 w-6 mx-auto mb-2" />
-            <p>Choose your garden experience</p>
+            <p>{t('login.chooseExperience')}</p>
           </div>
         </div>
       </div>
@@ -131,6 +135,9 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-earth flex items-center justify-center p-4">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4">
@@ -145,14 +152,14 @@ const Login = () => {
             )}
           </div>
           <CardTitle className={`text-2xl ${userType === "child" ? "text-child-primary" : "text-elder-primary"}`}>
-            {userType === "child" ? "🎈 Kids Login" : "🌿 Garden Login"}
+            {userType === "child" ? t('login.children.login') : t('login.elder.login')}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="username" className={userType === "elder" ? "text-lg" : ""}>
-                {userType === "child" ? "🌟 Your Garden Name" : "Username"}
+                {userType === "child" ? t('login.children.username') : t('login.elder.username')}
               </Label>
               <Input
                 id="username"
@@ -160,13 +167,13 @@ const Login = () => {
                 value={credentials.username}
                 onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
                 className={userType === "elder" ? "text-lg p-4" : ""}
-                placeholder={userType === "child" ? "Little Gardener" : "Enter your username"}
+                placeholder={userType === "child" ? t('login.children.usernamePlaceholder') : t('login.elder.usernamePlaceholder')}
                 required
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password" className={userType === "elder" ? "text-lg" : ""}>
-                {userType === "child" ? "🔐 Secret Garden Code" : "Password"}
+                {userType === "child" ? t('login.children.password') : t('login.elder.password')}
               </Label>
               <Input
                 id="password"
@@ -174,7 +181,7 @@ const Login = () => {
                 value={credentials.password}
                 onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                 className={userType === "elder" ? "text-lg p-4" : ""}
-                placeholder={userType === "child" ? "Your secret code" : "Enter your password"}
+                placeholder={userType === "child" ? t('login.children.passwordPlaceholder') : t('login.elder.passwordPlaceholder')}
                 required
               />
             </div>
@@ -185,7 +192,7 @@ const Login = () => {
                 size={userType === "elder" ? "xl" : "lg"}
                 className="w-full"
               >
-                {userType === "child" ? "🚀 Start Garden Adventure!" : "Enter Garden Hub"}
+                {userType === "child" ? t('login.children.loginButton') : t('login.elder.loginButton')}
               </Button>
               <Button 
                 type="button" 
@@ -193,7 +200,7 @@ const Login = () => {
                 onClick={() => setUserType(null)}
                 className="w-full"
               >
-                ← Go Back
+                {t('login.goBack')}
               </Button>
             </div>
           </form>

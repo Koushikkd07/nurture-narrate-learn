@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -12,10 +13,13 @@ import {
   MessageCircle,
   Volume2,
   Play,
-  Gift
+  Gift,
+  LogOut
 } from "lucide-react";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const ChildDashboard = () => {
+  const { t } = useTranslation();
   const [soilData, setSoilData] = useState({
     moisture: 65,
     ph: 6.8,
@@ -66,18 +70,27 @@ const ChildDashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-earth p-4">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8 animate-fade-in">
-          <div className="flex justify-center items-center space-x-4 mb-4">
-            <div className="animate-bounce-gentle text-4xl">🌱</div>
-            <h1 className="text-4xl font-bold text-child-primary">
-              Garden Adventure Time!
-            </h1>
-            <div className="animate-wiggle text-4xl">🐛</div>
+        {/* Header with Controls */}
+        <div className="flex justify-between items-start mb-8">
+          <div className="text-center flex-1 animate-fade-in">
+            <div className="flex justify-center items-center space-x-4 mb-4">
+              <div className="animate-bounce-gentle text-4xl">🌱</div>
+              <h1 className="text-4xl font-bold text-child-primary">
+                {t('childDashboard.title')}
+              </h1>
+              <div className="animate-wiggle text-4xl">🐛</div>
+            </div>
+            <p className="text-xl text-muted-foreground">
+              {t('childDashboard.greeting')}
+            </p>
           </div>
-          <p className="text-xl text-muted-foreground">
-            Hey there, Little Gardener! Let's check on your soil friends! 🌻
-          </p>
+          <div className="flex space-x-2">
+            <LanguageSwitcher />
+            <Button variant="outline" size="sm">
+              <LogOut className="h-4 w-4 mr-2" />
+              {t('common.logout')}
+            </Button>
+          </div>
         </div>
 
         {/* Mascot Section */}
@@ -87,8 +100,8 @@ const ChildDashboard = () => {
               <div className="flex items-center space-x-4">
                 <div className="text-6xl animate-bounce-gentle">💧</div>
                 <div>
-                  <h3 className="text-2xl font-bold text-child-primary">Dewey the Drop says:</h3>
-                  <p className="text-lg">"Your soil looks pretty good! Let's make it even better! 🌟"</p>
+                  <h3 className="text-2xl font-bold text-child-primary">{t('childDashboard.mascots.dewey')}</h3>
+                  <p className="text-lg">{t('childDashboard.mascots.soily')}</p>
                 </div>
               </div>
               <Button
@@ -112,7 +125,7 @@ const ChildDashboard = () => {
                 <div className="text-4xl animate-bounce-gentle">💧</div>
                 <Droplets className="h-8 w-8 text-blue-500" />
               </div>
-              <CardTitle className="text-lg">Water Level</CardTitle>
+              <CardTitle className="text-lg">{t('childDashboard.metrics.moisture')}</CardTitle>
             </CardHeader>
             <CardContent className="text-center space-y-4">
               <div className="text-4xl">
@@ -135,7 +148,7 @@ const ChildDashboard = () => {
                 <div className="text-4xl animate-wiggle">🧪</div>
                 <Zap className="h-8 w-8 text-purple-500" />
               </div>
-              <CardTitle className="text-lg">Soil Power (pH)</CardTitle>
+              <CardTitle className="text-lg">{t('childDashboard.metrics.ph')}</CardTitle>
             </CardHeader>
             <CardContent className="text-center space-y-4">
               <div className="text-4xl">
@@ -157,7 +170,7 @@ const ChildDashboard = () => {
                 <div className="text-4xl animate-pulse">🌡️</div>
                 <Thermometer className="h-8 w-8 text-orange-500" />
               </div>
-              <CardTitle className="text-lg">Soil Temperature</CardTitle>
+              <CardTitle className="text-lg">{t('childDashboard.metrics.temperature')}</CardTitle>
             </CardHeader>
             <CardContent className="text-center space-y-4">
               <div className="text-4xl">
@@ -179,7 +192,7 @@ const ChildDashboard = () => {
                 <div className="text-4xl animate-bounce-gentle">🍎</div>
                 <Gift className="h-8 w-8 text-green-500" />
               </div>
-              <CardTitle className="text-lg">Plant Food</CardTitle>
+              <CardTitle className="text-lg">{t('childDashboard.metrics.nutrients')}</CardTitle>
             </CardHeader>
             <CardContent className="text-center space-y-4">
               <div className="text-4xl">
@@ -203,7 +216,7 @@ const ChildDashboard = () => {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Star className="h-6 w-6 text-child-accent animate-pulse" />
-                <span className="text-child-primary">Today's Garden Mission!</span>
+                <span className="text-child-primary">{t('childDashboard.missions.title')}</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -225,7 +238,7 @@ const ChildDashboard = () => {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Trophy className="h-6 w-6 text-yellow-500" />
-                <span>Your Garden Badges</span>
+                <span>{t('childDashboard.achievements.title')}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -257,7 +270,7 @@ const ChildDashboard = () => {
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <div className="text-2xl animate-wiggle">🐛</div>
-                <span>Chat with Soily the Worm!</span>
+                <span>{t('childDashboard.chatbot.title')}</span>
               </div>
               <Button
                 variant="child"

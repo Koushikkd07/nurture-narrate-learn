@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -14,10 +15,13 @@ import {
   Calendar,
   AlertTriangle,
   CheckCircle,
-  Info
+  Info,
+  LogOut
 } from "lucide-react";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const ElderDashboard = () => {
+  const { t } = useTranslation();
   const [soilData, setSoilData] = useState({
     moisture: 65,
     ph: 6.8,
@@ -92,11 +96,18 @@ const ElderDashboard = () => {
           <div className="flex justify-between items-center mb-4">
             <div>
               <h1 className="text-4xl font-bold text-elder-primary mb-2">
-                Garden Health Dashboard
+                {t('elderDashboard.title')}
               </h1>
               <p className="text-xl text-muted-foreground">
-                Real-time soil monitoring • Last updated: {soilData.lastUpdated.toLocaleTimeString()}
+                {t('elderDashboard.greeting')} • Last updated: {soilData.lastUpdated.toLocaleTimeString()}
               </p>
+            </div>
+            <div className="flex space-x-2">
+              <LanguageSwitcher />
+              <Button variant="outline" size="lg">
+                <LogOut className="h-4 w-4 mr-2" />
+                {t('common.logout')}
+              </Button>
             </div>
             <div className="flex space-x-4">
               <Button
